@@ -10,11 +10,11 @@ public class cbIRC extends JavaPlugin {
 	private Logger Log = Logger.getLogger("Minecraft");
 	
 	public void onEnable() {
-		this.LogMessage("cbIRC Plugin Enabled!");
+		this.LogMessage("Enabled!");
 	}
 	
 	public void onDisable() {
-		this.LogMessage("cbIRC Plugin Disabled!");
+		this.LogMessage("Disabled!");
 	}
 	
 	protected void LogMessage(String Message) {
