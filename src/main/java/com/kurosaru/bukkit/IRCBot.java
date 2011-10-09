@@ -1,10 +1,14 @@
 package com.kurosaru.bukkit;
 
 import org.jibble.pircbot.*;
+import org.bukkit.Server;
 
 public class IRCBot extends PircBot {
-    
-    public IRCBot() {
+	
+	private org.bukkit.Server Server;
+	
+    public IRCBot(org.bukkit.Server Server) {
+    	this.Server = Server;
         this.setName("cbIRCBot");
     }
     
@@ -17,6 +21,10 @@ public class IRCBot extends PircBot {
             String time = new java.util.Date().toString();
             sendMessage(channel, "Simple IRC Communication Test");
         }
+        
+        this.Server.broadcastMessage("{IRC}["+sender+"]: "+message);
+        
+        //this.Instance.SendMessageToGame("{IRC}["+sender+"]: "+message);
     }
     
 }
