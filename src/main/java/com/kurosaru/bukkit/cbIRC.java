@@ -14,17 +14,41 @@ public class cbIRC extends JavaPlugin {
 	private Logger Log = Logger.getLogger("Minecraft");
 	private IRCBot bot;
 	
+	private String IRCServer;
+	private String PublicIRCChannel;
+	private String AdminIRCChannel;
+	private String IRCName;
+	
+	protected void LoadConfigs() {
+		this.getConfiguration().load();
+		this.IRCServer = this.getConfiguration().getString("IRCSERVER","NULL");
+		this.PublicIRCChannel = this.getConfiguration().getString("IRCPublicChannel","NULL");
+		this.AdminIRCChannel = this.getConfiguration().getString("IRCAdminChannel","NULL");
+		this.IRCName = this.getConfiguration().getString("IRCName", "cbIRCBot");
+		
+		if (this.IRCServer.contains("NULL")) {
+			this.getConfiguration().setHeader("IRC");
+			this.getConfiguration().setProperty("IRCSERVER", "NULL");
+			this.getConfiguration().setProperty("IRCPublicChannel","NULL");
+			this.getConfiguration().setProperty("IRCAdminChannel","NULL");
+			this.getConfiguration().setProperty("IRCName", "cbIRCBot");
+			this.getConfiguration().save();
+		}
+		
+	}
+	
 	public void onEnable() {
 		this.LogMessage("Enabled!");
+		this.LoadConfigs();
 		this.Bot();
 		
 		PluginManager PM = this.getServer().getPluginManager();
 		
 		PM.registerEvent(Event.Type.PLAYER_CHAT, new cbIRCPlayerListener(this.bot), Priority.Highest, this);
-		
 	}
 	
 	public void onDisable() {
+		this.bot.sendMessage(this.PublicIRCChannel,"IRCBot Disabled (Server might be shutting down!)");
 		this.LogMessage("Disabled!");
 	}
 	
@@ -34,13 +58,17 @@ public class cbIRC extends JavaPlugin {
 	}
 	
 	protected void Bot() {
-		try {
-			this.bot = new IRCBot(this.getServer());
-			this.bot.setVerbose(false);
-			this.bot.connect("irc.esper.net");
-			this.bot.joinChannel("#monstercraft");
-		} catch (Exception e) {
-			//this.LogMessage(e.getMessage());
+		if (!this.IRCServer.contains("NULL")) {
+			try {
+				this.bot = new IRCBot(this.getServer(),this.IRCName);
+				this.bot.setVerbose(false);
+				this.bot.connect(this.IRCServer);
+				this.bot.joinChannel(this.PublicIRCChannel);
+			} catch (Exception e) {
+				//this.LogMessage(e.getMessage());
+			}
+		} else {
+			this.LogMessage("No IRC Server Set. Plugin will be deactivated.");
 		}
 	}
 	

@@ -7,9 +7,9 @@ public class IRCBot extends PircBot {
 	
 	private org.bukkit.Server Server;
 	
-    public IRCBot(org.bukkit.Server Server) {
+    public IRCBot(org.bukkit.Server Server, String Name) {
     	this.Server = Server;
-        this.setName("cbIRCBot");
+        this.setName(Name);
     }
     
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
