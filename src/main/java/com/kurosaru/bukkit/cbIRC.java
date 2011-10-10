@@ -27,7 +27,6 @@ public class cbIRC extends JavaPlugin {
 		this.IRCName = this.getConfiguration().getString("IRCName", "cbIRCBot");
 		
 		if (this.IRCServer.contains("NULL")) {
-			this.getConfiguration().setHeader("IRC");
 			this.getConfiguration().setProperty("IRCSERVER", "NULL");
 			this.getConfiguration().setProperty("IRCPublicChannel","NULL");
 			this.getConfiguration().setProperty("IRCAdminChannel","NULL");
