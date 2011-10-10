@@ -41,7 +41,7 @@ public class cbIRC extends JavaPlugin {
 		this.LogMessage("Enabled!");
 		this.LoadConfigs();
 		this.Bot();
-		
+		this.bot.sendMessage(this.PublicIRCChannel,"IRCBot Loaded (MineCraft server is up!)");
 		PluginManager PM = this.getServer().getPluginManager();
 		
 		PM.registerEvent(Event.Type.PLAYER_CHAT, new cbIRCPlayerListener(this.bot), Priority.Highest, this);
